@@ -81,10 +81,6 @@ body {
     text-align: center;
   }
 
-
-
-
-
   .login-sec .register-text {
     position: absolute;
     width: 100%;
@@ -93,26 +89,17 @@ body {
     text-align: center;
   }
 
-
-
     .login-sec .register-text a {
       color: #E36262;
     }
-
 
     .login-sec .register-text i {
       color: #ff6ec4;
     }
 
-
-
-
-
   .login-sec .copy-text i {
     color: #ff6ec4;
   }
-
-
 
   .login-sec .copy-text a {
     color: #E36262;
@@ -213,8 +200,6 @@ body {
   color: red;
 }
 
-
-
 /*Register CSS END*/
 
 /* You can add global styles to this file, and also import other style files */
@@ -233,4 +218,3 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-

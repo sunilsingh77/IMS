@@ -1,8 +1,7 @@
 export interface Product {
-    productId?: number;
-    name: string;
-    description: string;
-    outOfStock: boolean;
-    price: number;
-    imageUrl: string;
+  productId?: number;
+  name: string;
+  price: number;
+  quantity: number;
+  createdDate: Date;
 }

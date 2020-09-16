@@ -57,7 +57,7 @@ namespace InventoryManagementSystem.Controllers
             objProduct.Price = product.Price;
             objProduct.Name = product.Name;
             objProduct.Quantity = product.Quantity;
-
+            objProduct.ModifiedDate = DateTime.Now;
             _context.Entry(objProduct).State = EntityState.Modified;
 
             try
@@ -83,6 +83,8 @@ namespace InventoryManagementSystem.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult<Product>> AddProduct(Product product)
         {
+            product.CreatedDate = DateTime.Now;
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 

@@ -19,15 +19,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   insertForm: FormGroup;
   name: FormControl;
   price: FormControl;
-  description: FormControl;
-  imageUrl: FormControl;
+  quantity: FormControl;
+  createdDate: FormControl;
 
   // Updating the Product
   updateForm: FormGroup;
   _name: FormControl;
   _price: FormControl;
-  _description: FormControl;
-  _imageUrl: FormControl;
+  _quantity: FormControl;
   _id: FormControl;
 
   // Add Modal
@@ -105,7 +104,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.products$ = this.productservice.getProducts();
         this.products$.subscribe(updatedlist => {
           this.products = updatedlist;
-
           this.modalRef.hide();
           this.rerender();
         });
@@ -119,16 +117,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this._id.setValue(productEdit.productId);
     this._name.setValue(productEdit.name);
     this._price.setValue(productEdit.price);
-    this._description.setValue(productEdit.description);
-    this._imageUrl.setValue(productEdit.imageUrl);
+    this._quantity.setValue(productEdit.quantity);    
 
     this.updateForm.setValue({
       'id': this._id.value,
       'name': this._name.value,
       'price': this._price.value,
-      'description': this._description.value,
-      'imageUrl': this._imageUrl.value,
-      'outOfStock': true
+      'quantity': this._quantity.value
     });
 
     this.modalRef = this.modalService.show(this.editmodal);
@@ -156,28 +151,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     // Initializing Add product properties
 
-    let validateImageUrl: string = '^(https?:\/\/.*\.(?:png|jpg))$';
-
     this.name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
-    this.price = new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]);
-    this.description = new FormControl('', [Validators.required, Validators.maxLength(150)]);
-    this.imageUrl = new FormControl('', [Validators.pattern(validateImageUrl)]);
+    this.price = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
+    this.quantity = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
 
     this.insertForm = this.fb.group({
       'productId': 0,
       'name': this.name,
       'price': this.price,
-      'description': this.description,
-      'imageUrl': this.imageUrl,
-      'outOfStock': true,
-
+      'quantity': this.quantity
     });
 
     // Initializing Update Product properties
     this._name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
-    this._price = new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]);
-    this._description = new FormControl('', [Validators.required, Validators.maxLength(150)]);
-    this._imageUrl = new FormControl('', [Validators.pattern(validateImageUrl)]);
+    this._price = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
+    this._quantity = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
     this._id = new FormControl();
 
     this.updateForm = this.fb.group(
@@ -185,9 +173,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         'id': this._id,
         'name': this._name,
         'price': this._price,
-        'description': this._description,
-        'imageUrl': this._imageUrl,
-        'outOfStock': true
+        'quantity': this._quantity
       });
 
     console.log('product.component loaded!')

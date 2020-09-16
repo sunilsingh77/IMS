@@ -11,19 +11,12 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  private baseUrl = '/api/products/getproducts';
-
-  private productUrl = '/api/products/addproduct';
-
-  private deleteUrl = '/api/products/deleteproduct/';
-
-  private updateUrl = '/api/products/updateproduct/';
-
+  private baseUrl = '/api/products/';
   private product$: Observable<Product[]>;
 
   getProducts(): Observable<Product[]> {
     if (!this.product$) {      
-      this.product$ = this.http.get<Product[]>(this.baseUrl).pipe(shareReplay());
+      this.product$ = this.http.get<Product[]>(this.baseUrl + "getproducts").pipe(shareReplay());
     }
 
     // if products cache exists return it
@@ -42,23 +35,16 @@ export class ProductService {
       'productId': 0,
       'name': newProduct.name,
       'price': Number(newProduct.price),
-      'description': newProduct.description,
-      'imageUrl': newProduct.imageUrl,
-      'outOfStock': true,
+      'quantity': Number(newProduct.quantity)
     };
 
     //let pro = <Product>(newOne);
-    return this.http.post<Product>(this.productUrl, newOne);
+    return this.http.post<Product>(this.baseUrl + "addproduct", newOne);
   }
 
   // Update the Product
-  updateProduct(id: number, editProduct: Product): Observable<Product> {    
-    return this.http.put<Product>(this.updateUrl + id, editProduct);
-  }
-
-  // Delete Product
-  deleteProduct(id: number): Observable<any> {
-    return this.http.delete(this.deleteUrl + id);
+  updateProduct(id: number, editProduct: Product): Observable<Product> {
+    return this.http.put<Product>(this.baseUrl + "updateproduct/" + id, editProduct);
   }
 
   // Clear Cache

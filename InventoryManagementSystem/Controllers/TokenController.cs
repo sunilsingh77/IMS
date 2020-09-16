@@ -67,14 +67,6 @@ namespace InventoryManagementSystem.Controllers
             // Validate credentials
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                //// If the user has confirmed his email
-                //if (!await _userManager.IsEmailConfirmedAsync(user))
-                //{
-                //    ModelState.AddModelError(string.Empty, "User Has not Confirmed Email.");
-
-                //    return Unauthorized(new { LoginError = "We sent you an Confirmation Email. Please Confirm Your Registration With DIARSOTECHNOLOGIES.COM To Log in." });
-                //}
-
                 // username & password matches: create the refresh token
                 var newRtoken = CreateRefreshToken(_appSettings.ClientId, user.Id);
 
