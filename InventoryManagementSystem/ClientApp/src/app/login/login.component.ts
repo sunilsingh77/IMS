@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   ErrorMessage: string;
   invalidLogin: boolean;
+  
 
   constructor(private acct: AccountService,
     private router: Router,
@@ -49,9 +50,10 @@ export class LoginComponent implements OnInit {
 
     },
       error => {
-        this.invalidLogin = true;
-        this.ErrorMessage = error.error.loginError;
+        this.invalidLogin = true;        
+        this.ErrorMessage = "Please provide valid Username/Password!";
         console.log(this.ErrorMessage);
       });
   }
+    
 }

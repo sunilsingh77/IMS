@@ -18,7 +18,7 @@
         <td>{{product.name | uppercase}}</td>
         <td>{{product.price | currency: 'USD':'symbol-narrow':'.2'}}</td>
         <td>{{product.quantity}}</td>
-        <td>{{product.createdDate}}</td>
+        <td>{{product.createdDate | date: 'dd/MM/yyyy'}}</td>
         <td>
           <div class="btn-group mt-2" role="group">
             <button type="button" class="btn btn-primary" (click)="onUpdateModal(product)"><i class="fas fa-edit"></i></button>
@@ -47,7 +47,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="productTitle"><i class="fa fa-pencil-square-o"></i></span>
             </div>
-            <input type="text" id="name" formControlName="name" class="form-control" placeholder="product name" aria-label="name" aria-describedby="productTitle">
+            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Product Name" aria-label="name" aria-describedby="productTitle">
           </div>
           <div class="errorMessage" *ngIf="name.touched && name.errors">
             <span *ngIf="name.hasError('required')">Product Name is required.</span>
@@ -60,7 +60,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fa fa-usd"></i></span>
             </div>
-            <input formControlName="price" type="text" class="form-control" placeholder="Product price, eg: 999">
+            <input formControlName="price" type="text" class="form-control" placeholder="Product price">
           </div>
           <div class="errorMessage" *ngIf="price.touched && price.errors">
             <span *ngIf="price.hasError('required')">Product Price is required.</span>
@@ -73,7 +73,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="productQuantity"><i class="fa fa-pencil-square-o"></i></span>
             </div>
-            <input formControlName="quantity" type="text" class="form-control" placeholder="Product quantity, eg: 123">            
+            <input formControlName="quantity" type="text" class="form-control" placeholder="Product Quantity">            
           </div>
           <div class="errorMessage" *ngIf="quantity.touched && quantity.errors">
             <span *ngIf="quantity.hasError('required')">Product Quantity is required.</span>
@@ -82,7 +82,8 @@
         </li>
 
         <li class="list-group-item">
-          <button [disabled]="insertForm.invalid" class="btn btn-primary btn-block">ADD</button>
+          <button [disabled]="insertForm.invalid" class="btn btn-primary btn-block">Add New Product</button>
+          <button class="btn btn-primary btn-block" (click)="onAddFormReset()">Reset</button>
         </li>
       </ul>
 
@@ -120,7 +121,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="productTitle"><i class="fa fa-pencil-square-o"></i></span>
             </div>
-            <input type="text" id="name" formControlName="name" class="form-control" placeholder="eg: Macbook Air 2019" aria-label="name" aria-describedby="productTitle">
+            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Product Name" aria-label="name" aria-describedby="productTitle">
           </div>
           <div *ngIf="_name.touched && _name.errors" class="errorMessage">
             <span *ngIf="_name.hasError('required')">Product Name is required.</span>
@@ -133,7 +134,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fa fa-usd"></i></span>
             </div>
-            <input formControlName="price" type="text" class="form-control" placeholder="eg: 999">
+            <input formControlName="price" type="text" class="form-control" placeholder="Product price">
           </div>
           <div *ngIf="_price.touched && _price.errors" class="errorMessage">
             <span *ngIf="_price.hasError('required')">Product Price is required.</span>            
@@ -146,9 +147,9 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="productQuantity"><i class="fa fa-pencil-square-o"></i></span>
             </div>
-            <input formControlName="quantity" class="form-control" placeholder="Quantity should be only numeric" aria-label="Quantity" aria-describedby="productQuantity">
+            <input formControlName="quantity" class="form-control" placeholder="Product Quantity" aria-label="Quantity" aria-describedby="productQuantity">
           </div>
-          <div *ngIf="_quantity.touched && _description.errors" class="errorMessage">
+          <div *ngIf="_quantity.touched && _quantity.errors" class="errorMessage">
             <span *ngIf="_quantity.hasError('required')">Product Quantity is required.</span>
             <span *ngIf="_quantity.hasError('pattern')">Only numeric value allowed.</span>
           </div>

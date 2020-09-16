@@ -94,6 +94,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onAddFormReset() {    
+    this.insertForm.reset();
+    return false;
+  }
+
   // Update an Existing Product
   onUpdate() {
     let editProduct = this.updateForm.value;
@@ -109,7 +114,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         });
       },
       error => console.log('Could Not Update Product')
-    )
+    )   
   }
 
   // Load the update Modal
