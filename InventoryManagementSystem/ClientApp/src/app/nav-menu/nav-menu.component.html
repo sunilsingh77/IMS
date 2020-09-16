@@ -1,0 +1,39 @@
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/']">InventoryManagementSystem</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+        aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!--Navigation-->
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav flex-grow">
+          <!--<li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="(LoginStatus$ | async) as LoginStatus" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/']" *ngIf="LoginStatus">Home</a>
+          </li>-->
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="(LoginStatus$ | async) as LoginStatus">
+            <a class="nav-link text-dark" [routerLink]='["/products"]' *ngIf="LoginStatus">Products</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!(LoginStatus$ | async) as LoginStatus">
+            <a class="nav-link text-dark" [routerLink]="['/login']" *ngIf="LoginStatus">Login</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!(LoginStatus$ | async) as LoginStatus">
+            <a class="nav-link text-dark" [routerLink]="['/register']" *ngIf="LoginStatus">Register</a>
+          </li>
+          <li class="nav-item" *ngIf="(LoginStatus$ | async) as LoginStatus">
+            <a class="nav-link text-danger" *ngIf="(UserName$ | async) as UserName">{{UserName | uppercase}}</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="(LoginStatus$ | async) as LoginStatus">
+            <a class="nav-link text-dark" [routerLink]="['/logout']" (click)="onLogout()" *ngIf="LoginStatus">Logout</a>
+          </li>
+        </ul>
+       
+      </div>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+</header>
