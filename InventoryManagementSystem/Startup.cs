@@ -100,20 +100,6 @@ namespace InventoryManagementSystem
                     ClockSkew = TimeSpan.Zero
                 };
             });
-
-            //Add Authorization
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("RequiredLoggedIn", policy => policy.RequireRole("Admin", "Customer", "Moderator").RequireAuthenticatedUser());
-            //    options.AddPolicy("RequiredAdministratorRole", policy => policy.RequireRole("Admin").RequireAuthenticatedUser());
-            //});
-
-            /*
-             Requirement: 
-             User should be Authenticated
-             User Must be Authorized.
-             In Order to view products (GetAllProducts).
-            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -136,12 +122,7 @@ namespace InventoryManagementSystem
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseAuthentication();
-            
-            //if (!env.IsDevelopment())
-            //{
-            //    app.UseSpaStaticFiles();
-            //}
-            
+                        
             //Swagger documentation
             app.UseOpenApi();
             app.UseSwaggerUi3();

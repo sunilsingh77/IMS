@@ -28,7 +28,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   _price: FormControl;
   _quantity: FormControl;
   _id: FormControl;
-
+  
   // Add Modal
   @ViewChild('template', { static: false }) modal: TemplateRef<any>;
 

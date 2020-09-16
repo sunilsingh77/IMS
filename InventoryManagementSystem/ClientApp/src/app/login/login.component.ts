@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
       'Username': this.Username,
       'Password': this.Password
     });
+    <any>this.acct.logout();
   }
   onSubmit() {
     const userlogin = this.insertForm.value;
