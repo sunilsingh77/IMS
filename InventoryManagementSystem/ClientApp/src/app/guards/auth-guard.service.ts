@@ -26,10 +26,8 @@ export class AuthGuardService implements CanActivate {
       // if the user is already logged in
       switch (destination) {
         case '/products':
-        case '/products/' + productId: {            
-              return true;            
-          }
-        case '/products/update': {            
+        case '/products/' + productId:
+        case '/products/updateproduct/' + productId: {            
               return true;            
         }        
         // tslint:disable-next-line:no-switch-case-fall-through

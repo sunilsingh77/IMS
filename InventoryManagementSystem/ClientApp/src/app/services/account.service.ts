@@ -15,9 +15,7 @@ export class AccountService {
 
   // Url to access our Web API’s
   private baseUrlLogin: string = '/api/account/login';
-
   private baseUrlRegister: string = '/api/account/register';
-
   // Token Controller
   private baseUrlToken: string = '/api/token/auth';
 
@@ -83,17 +81,12 @@ export class AccountService {
           localStorage.setItem('loginStatus', '1');
           localStorage.setItem('jwt', result.authToken.token);
           localStorage.setItem('username', result.authToken.userName);
-          localStorage.setItem('expiration', result.authToken.expiration);
-          localStorage.setItem('userRole', result.authToken.roles);
+          localStorage.setItem('expiration', result.authToken.expiration);          
           localStorage.setItem('refreshToken', result.authToken.refresh_Token);
           this.UserName.next(localStorage.getItem('username'));
           this.UserRole.next(localStorage.getItem('userRole'));
-
-
         }
-
         return result;
-
       })
 
     );
@@ -102,8 +95,7 @@ export class AccountService {
   logout() {
     // Set Loginstatus to false and delete saved jwt cookie
     this.loginStatus.next(false);
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('userRole');
+    localStorage.removeItem('jwt');    
     localStorage.removeItem('username');
     localStorage.removeItem('expiration');
     localStorage.setItem('loginStatus', '0');
@@ -111,9 +103,6 @@ export class AccountService {
     console.log("Logged Out Successfully");
 
   }
-
-
-
 
   checkLoginStatus(): boolean {
 
