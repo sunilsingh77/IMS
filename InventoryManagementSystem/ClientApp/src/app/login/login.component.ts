@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
     
   insertForm: FormGroup;
   Username: FormControl;
@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder) { }
+
+  @ViewChild('submitbtn', { static: false }) submitBtn: ElementRef;
 
   ngOnInit() {
     this.Username = new FormControl('', [Validators.required]);
@@ -37,7 +39,13 @@ export class LoginComponent implements OnInit {
     });
     <any>this.acct.logout();
   }
+  ngAfterViewInit() {    
+    this.submitBtn.nativeElement.value = "Logged-In";
+  }
   onSubmit() {
+    this.submitBtn.nativeElement.value = "Submitting....";
+    this.submitBtn.nativeElement.disabled = true;
+
     const userlogin = this.insertForm.value;
 
     this.acct.login(userlogin.Username, userlogin.Password).subscribe(result => {
