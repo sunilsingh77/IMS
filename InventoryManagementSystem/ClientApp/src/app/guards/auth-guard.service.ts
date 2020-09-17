@@ -13,28 +13,20 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.acct.isLoggesIn.pipe(take(1), map((loginStatus: boolean) => {
-      const destination: string = state.url;
+      //const destination: string = state.url;
       const productId = route.params.id;
 
       // To check if user is not logged in
       if (!loginStatus) {
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-
         return false;
       }
-      
-      // if the user is already logged in
-      switch (destination) {
-        case '/products':
-        case '/products/' + productId:
-        case '/products/updateproduct/' + productId: {            
-              return true;            
-        }        
-        // tslint:disable-next-line:no-switch-case-fall-through
-        default:
-          return false;
+      else if (!this.acct.checkLoginStatus()) {
+        return false;
       }
-
+      else {
+        return true;
+      }
     }));
   }
 }
