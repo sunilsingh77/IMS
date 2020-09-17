@@ -32,6 +32,8 @@ export class JwtIntercepterService implements HttpInterceptor {
               return this.handleHttpResponseError(request, next);
             case 400:
               return <any>this.acct.logout();
+            case 500:
+              alert('Internal error, check db connection.');
           }
         } else {
           return throwError(this.handleError);
