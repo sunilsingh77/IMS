@@ -25,6 +25,9 @@
           </div>
         </td>
       </tr>
+      <tr *ngIf="!products">
+        <td colspan="6" style="text-align: center;">No Product Founds!</td>
+      </tr>
     </tbody>
   </table>
 </div>
