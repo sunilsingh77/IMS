@@ -3,7 +3,7 @@
     <!-- ALERT  WARNING START -->
     <div class="text-center mb-3 alert alert-warning alert-dismissible" *ngIf="invalidLogin" #message  role="alert">
       <strong>{{ErrorMessage}}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="invalidLogin=false">
             <span aria-hidden="true">&times;</span>
         </button>
     </div><!-- ALERT  WARNING END -->
