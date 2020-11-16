@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products" class="text-center">
+      <tr *ngFor="let product of products" class="text-center cusror-pointer" >
         <td>{{product.productId}}</td>
         <td>{{product.name | uppercase}}</td>
         <td>{{product.price | currency: 'USD':'symbol-narrow':'.2'}}</td>
@@ -30,7 +30,7 @@
 </div>
 
 <!-- ADD PRODUCT MODAL START-->
-<ng-template #template>
+<!--<ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title">ADD NEW PRODUCT</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -90,13 +90,13 @@
     </form>
 
   </div>
-</ng-template>
+</ng-template>-->
 
 <!-- ADD PRODUCT MODAL START-->
 
 
 <!-- EDIT PRODUCT MODAL START-->
-<ng-template #editTemplate>
+<!--<ng-template #editTemplate>
   <div class="modal-header">
     <h4 class="modal-title">EDIT PRODUCT DETAILS</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -162,6 +162,6 @@
 
     </form>
   </div>
-</ng-template>
+</ng-template>-->
 
 <!-- EDIT PRODUCT MODAL END-->

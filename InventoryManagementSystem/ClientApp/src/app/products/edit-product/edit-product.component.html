@@ -1,0 +1,62 @@
+<div class="modal-header">
+  <h4 class="modal-title"> <span class="cusror-pointer"><img src="assets/img/back.svg" routerLink="/products" /></span> EDIT PRODUCT DETAILS</h4>
+</div>
+<div class="modal-body text-center">
+  <p class="list-group-item active text-center text-uppercase">{{modalMessage}}</p>
+  <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+    <ul class="list-group">
+      <li class="list-group-item" [hidden]="_id">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="productId"><i class="fa fa-key"></i></span>
+          </div>
+          <input type="text" class="form-control" formControlName="id" />
+        </div>
+
+      </li>
+      <li class="list-group-item">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="productTitle"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <input type="text" id="name" formControlName="name" class="form-control" placeholder="Product Name" aria-label="name" aria-describedby="productTitle">
+        </div>
+        <div *ngIf="_name.touched && _name.errors" class="errorMessage">
+          <span *ngIf="_name.hasError('required')">Product Name is required.</span>
+          <span *ngIf="_name.hasError('maxlength')">Max 50 characters allowed for Product Name.</span>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-usd"></i></span>
+          </div>
+          <input formControlName="price" type="text" class="form-control" placeholder="Product price">
+        </div>
+        <div *ngIf="_price.touched && _price.errors" class="errorMessage">
+          <span *ngIf="_price.hasError('required')">Product Price is required.</span>
+          <span *ngIf="_price.hasError('pattern')">Only numeric value allowed.</span>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="productQuantity"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <input formControlName="quantity" class="form-control" placeholder="Product Quantity" aria-label="Quantity" aria-describedby="productQuantity">
+        </div>
+        <div *ngIf="_quantity.touched && _quantity.errors" class="errorMessage">
+          <span *ngIf="_quantity.hasError('required')">Product Quantity is required.</span>
+          <span *ngIf="_quantity.hasError('pattern')">Only numeric value allowed.</span>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <button [disabled]="updateForm.invalid" class="btn btn-primary btn-block">UPDATE</button>
+      </li>
+    </ul>
+
+  </form>
+</div>

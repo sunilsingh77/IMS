@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h4 class="modal-title"> <span class="cusror-pointer"><img src="assets/img/back.svg" routerLink="/products" /></span> ADD NEW PRODUCT</h4>
+</div>
+<div class="modal-body text-center">
+  <p class="list-group-item active text-center text-uppercase">{{modalMessage}}</p>
+  <form [formGroup]="insertForm" (ngSubmit)="onSubmit()">
+    <ul class="list-group">
+
+      <li class="list-group-item">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="productTitle"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <input type="text" id="name" formControlName="name" class="form-control" placeholder="Product Name" aria-label="name" aria-describedby="productTitle">
+        </div>
+        <div class="errorMessage" *ngIf="name.touched && name.errors">
+          <span *ngIf="name.hasError('required')">Product Name is required.</span>
+          <span *ngIf="name.hasError('maxlength')">Max 50 characters allowed for Product Name.</span>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-usd"></i></span>
+          </div>
+          <input formControlName="price" type="text" class="form-control" placeholder="Product price">
+        </div>
+        <div class="errorMessage" *ngIf="price.touched && price.errors">
+          <span *ngIf="price.hasError('required')">Product Price is required.</span>
+          <span *ngIf="price.hasError('pattern')">Only numeric value allowed.</span>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="productQuantity"><i class="fa fa-pencil-square-o"></i></span>
+          </div>
+          <input formControlName="quantity" type="text" class="form-control" placeholder="Product Quantity">
+        </div>
+        <div class="errorMessage" *ngIf="quantity.touched && quantity.errors">
+          <span *ngIf="quantity.hasError('required')">Product Quantity is required.</span>
+          <span *ngIf="quantity.hasError('pattern')">Only numeric value allowed.</span>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <button [disabled]="insertForm.invalid" class="btn btn-primary btn-block">Add New Product</button>
+        <button class="btn btn-primary btn-block" (click)="onAddFormReset()">Reset</button>
+      </li>
+    </ul>
+
+  </form>
+
+</div>

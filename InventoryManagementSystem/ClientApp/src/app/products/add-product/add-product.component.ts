@@ -1,20 +1,18 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, TemplateRef } from '@angular/core';
+import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { Product } from '../../interfaces/product';
-import { Observable, Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
-import { DataTableDirective } from 'angular-datatables';
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  selector: 'app-add-product',
+  templateUrl: './add-product.component.html',
+  styleUrls: ['./add-product.component.css']
 })
-export class ProductListComponent implements OnInit, OnDestroy {
-
+export class AddProductComponent implements OnInit {
   // For the FormControl - Adding products
   insertForm: FormGroup;
   name: FormControl;
@@ -28,7 +26,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   _price: FormControl;
   _quantity: FormControl;
   _id: FormControl;
-  
+
   // Add Modal
   @ViewChild('template', { static: false }) modal: TemplateRef<any>;
 
@@ -37,10 +35,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Modal properties
   modalMessage: string;
-  modalRef: BsModalRef;
+
   selectedProduct: Product;
   products$: Observable<Product[]>;
-  products: Product[] = [];  
+  products: Product[] = [];
 
   // Datatables Properties
   dtOptions: DataTables.Settings = {};
@@ -49,56 +47,36 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective;
 
   constructor(private productservice: ProductService,
-    private modalService: BsModalService,
     private fb: FormBuilder,
     private chRef: ChangeDetectorRef,
     private router: Router,
     private acct: AccountService) { }
 
-  /// Load Add New product Modal
-  onAddProduct() {
-    //this.modalRef = this.modalService.show(this.modal);
-    this.router.navigate(['/products','add-product']);
-  }
 
   // Method to Add new Product
-  //onSubmit() {
-  //  let newProduct = this.insertForm.value;
+  onSubmit() {
+    let newProduct = this.insertForm.value;
 
-  //  this.productservice.insertProduct(newProduct).subscribe(
-  //    result => {
-  //      this.productservice.clearCache();
-  //      this.products$ = this.productservice.getProducts();
+    this.productservice.insertProduct(newProduct).subscribe(
+      result => {
+        this.productservice.clearCache();
+        this.products$ = this.productservice.getProducts();
 
-  //      this.products$.subscribe(newlist => {
-  //        this.products = newlist;
-  //        this.modalRef.hide();
-  //        this.insertForm.reset();
-  //        this.rerender();
+        this.products$.subscribe(newlist => {
+          this.products = newlist;
+          this.insertForm.reset();
+        });
+        console.log('New Product added');
+      },
+      error => console.log('Could not add Product')
+    )
+  }
 
-  //      });
-  //      console.log('New Product added');
-  //    },
-  //    error => console.log('Could not add Product')
-  //  )
-  //}
 
-  // We will use this method to destroy old table and re-render new table
-  //rerender() {
-  //  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //    // Destroy the table first in the current context
-  //    dtInstance.destroy();
-
-  //    // Call the dtTrigger to rerender again
-  //    this.dtTrigger.next();
-
-  //  });
-  //}
-
-  //onAddFormReset() {    
-  //  this.insertForm.reset();
-  //  return false;
-  //}
+  onAddFormReset() {
+    this.insertForm.reset();
+    return false;
+  }
 
   // Update an Existing Product
   //onUpdate() {
@@ -115,7 +93,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   //      });
   //    },
   //    error => console.log('Could Not Update Product')
-  //  )   
+  //  )
   //}
   //prepareEditData(): any {
   //  const ctrl = this.updateForm.controls;
@@ -128,12 +106,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   //  return data;
   //}
   // Load the update Modal
-  onUpdateModal(productEdit: Product): void {
-    this.router.navigate(['/products','edit-product', + productEdit.productId])
+  //onUpdateModal(productEdit: Product): void {
   //  this._id.setValue(productEdit.productId);
   //  this._name.setValue(productEdit.name);
   //  this._price.setValue(productEdit.price);
-  //  this._quantity.setValue(productEdit.quantity);    
+  //  this._quantity.setValue(productEdit.quantity);
 
   //  this.updateForm.setValue({
   //    'id': this._id.value,
@@ -144,8 +121,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   //  this.modalRef = this.modalService.show(this.editmodal);
 
-  }  
-  
+  //}
+
   ngOnInit() {
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -163,41 +140,42 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
 
     // Modal Message
-   // this.modalMessage = 'All Fields Are Mandatory';
+    this.modalMessage = 'All Fields Are Mandatory';
 
     // Initializing Add product properties
 
-    //this.name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
-    //this.price = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
-    //this.quantity = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
+    this.name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+    this.price = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
+    this.quantity = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
 
-    //this.insertForm = this.fb.group({
-    //  'productId': 0,
-    //  'name': this.name,
-    //  'price': this.price,
-    //  'quantity': this.quantity
-    //});
+    this.insertForm = this.fb.group({
+      'productId': 0,
+      'name': this.name,
+      'price': this.price,
+      'quantity': this.quantity
+    });
 
     // Initializing Update Product properties
-    //this._name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
-    //this._price = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
-    //this._quantity = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
-    //this._id = new FormControl();
+    this._name = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+    this._price = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
+    this._quantity = new FormControl('', [Validators.required, Validators.pattern('^\\d*$')]);
+    this._id = new FormControl();
 
-    //this.updateForm = this.fb.group(
-    //  {
-    //    'id': this._id,
-    //    'name': this._name,
-    //    'price': this._price,
-    //    'quantity': this._quantity
-    //  });
+    this.updateForm = this.fb.group(
+      {
+        'id': this._id,
+        'name': this._name,
+        'price': this._price,
+        'quantity': this._quantity
+      });
 
-    //console.log('product.component loaded!')
+    console.log('product.component loaded!')
   }
 
   ngOnDestroy() {
     // Do not forget to unsubscribe
     this.dtTrigger.unsubscribe();
   }
+
 
 }
