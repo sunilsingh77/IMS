@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../interfaces/product';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { shareReplay, flatMap, first } from 'rxjs/operators';
 
 @Injectable({
@@ -13,12 +13,13 @@ export class ProductService {
 
   private baseUrl = '/api/products/';
   private product$: Observable<Product[]>;
+  private checkLoadProductList$ = new BehaviorSubject<boolean>(false);
 
   getProducts(): Observable<Product[]> {
     if (!this.product$) {      
       this.product$ = this.http.get<Product[]>(this.baseUrl + "getproducts").pipe(shareReplay());
     }
-
+    this.checkLoadProductList$.next(true);
     // if products cache exists return it
     return this.product$;
   }
@@ -50,5 +51,9 @@ export class ProductService {
   // Clear Cache
   clearCache() {
     this.product$ = null;
+  }
+
+  get checkProductLoadStatus() {
+    return this.checkLoadProductList$.asObservable();
   }
 }

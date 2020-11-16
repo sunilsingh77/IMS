@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Updating the Product
   updateForm: FormGroup;
-  _name: FormControl;
+  _name: FormControl// Update an Existing Product
   _price: FormControl;
   _quantity: FormControl;
   _id: FormControl;
@@ -198,6 +198,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // Do not forget to unsubscribe
     this.dtTrigger.unsubscribe();
+  }
+
+  prepareEditData(): any {
+    const ctrl = this.updateForm.controls;
+    let data = {
+      id: ctrl['id'].value,
+      name: ctrl['name'].value,
+      price: +ctrl['price'].value,
+      quantity: +ctrl['quantity'].value
+    }
+    return data;
   }
 
 }

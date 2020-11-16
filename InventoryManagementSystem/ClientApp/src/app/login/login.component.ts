@@ -49,18 +49,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const userlogin = this.insertForm.value;
 
     this.acct.login(userlogin.Username, userlogin.Password).subscribe(result => {
-
       const token = (<any>result).authToken.token;
       console.log(token);
       console.log('User Logged In Successfully');
       this.invalidLogin = false;
-      console.log(this.returnUrl);
-      this.router.navigateByUrl(this.returnUrl);
+      console.log(this.returnUrl);      
+      this.router.navigateByUrl(this.returnUrl+ '/products');
 
     },
       error => {
         this.invalidLogin = true;        
         this.ErrorMessage = "Please provide valid Username/Password!";
+        this.submitBtn.nativeElement.value = "Logged-In";
+        this.submitBtn.nativeElement.disabled = false;
         console.log(this.ErrorMessage);
       });
   }
